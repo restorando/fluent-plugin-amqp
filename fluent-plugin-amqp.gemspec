@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-amqp"
   gem.version       = "0.0.9"
-  gem.authors       = ["Restorando"]
+  gem.authors       = ["Augusto Becciu", "Juan Manuel Barreneche"]
   gem.email         = ["devs@restorando.com"]
 
   gem.description   = %q{AMQP output plugin for Fluent}
