@@ -1,6 +1,12 @@
-# Fluent AMQP
+# AMQP output plugin for Fluentd
 
-TODO: Write a gem description
+Fluentd output plugin to publish events to an amqp broker.
+
+Events are published one by one using the Fluentd tag as the routing key, in JSON format like:
+
+```javascript
+{ "key": "fluentd-tag", "timestamp": "fluentd-timestamp", "payload": "event-payload" }
+```
 
 ## Installation
 
@@ -16,9 +22,26 @@ Or install it yourself as:
 
     $ gem install fluent-plugin-amqp
 
-## Usage
+## Configuration
 
-TODO: Write usage instructions here
+```
+<match pattern>
+  type amqp
+
+  # Set broker host and port
+  host localhost
+  port 5672
+
+  # Set user and password for authentication
+  user guest
+  password guest
+
+  # Configure amqp entities vhost, exchange id and type
+  vhost /
+  exchange my_exchange
+  exchange_type topic
+</match>
+```
 
 ## Contributing
 
