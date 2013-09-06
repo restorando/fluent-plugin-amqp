@@ -13,6 +13,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :exchange, :string, default: ""
   config_param :exchange_type, :string, default: "topic"
   config_param :exchange_durable, :bool, default: true
+  config_param :payload_only, :bool, default: false
 
   def initialize(*)
     super
@@ -63,7 +64,7 @@ class AmqpOutput < Fluent::BufferedOutput
   # 'chunk.open {|io| ... }' to get IO objects.
   def write(chunk)
     chunk.msgpack_each do |(tag, time, record)|
-      event = { "key" => tag, "timestamp" => time, "payload" => record }
+      event = @payload_only ? record : { "key" => tag, "timestamp" => time, "payload" => record }
       get_or_create_exchange.publish Yajl.dump(event), routing_key: tag
     end
   end
