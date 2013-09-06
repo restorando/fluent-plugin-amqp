@@ -75,8 +75,8 @@ class AmqpOutputTest < Test::Unit::TestCase
 
     ev1 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>1}})
     ev2 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>2}})
-    amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test" })
-    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test" })
+    amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test", content_type: 'application/octet-stream' })
+    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test", content_type: 'application/octet-stream' })
 
     d.run
   end
