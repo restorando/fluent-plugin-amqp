@@ -12,6 +12,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :vhost, :string, default: "/"
   config_param :exchange, :string, default: ""
   config_param :exchange_type, :string, default: "topic"
+  config_param :exchange_durable, :bool, default: true
 
   def initialize(*)
     super
@@ -77,7 +78,7 @@ class AmqpOutput < Fluent::BufferedOutput
 
     unless @amqp_channel && @amqp_channel.open?
       @amqp_channel  = @amqp_conn.create_channel
-      @amqp_exchange = Bunny::Exchange.new(@amqp_channel, @exchange_type.to_sym, @exchange_name, durable: true)
+      @amqp_exchange = Bunny::Exchange.new(@amqp_channel, @exchange_type.to_sym, @exchange_name, durable: @exchange_durable)
     end
 
     @amqp_exchange
