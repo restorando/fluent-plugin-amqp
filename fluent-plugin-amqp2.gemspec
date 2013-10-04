@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "fluentd", "~> 0.10.0"
-  gem.add_dependency "bunny", ">= 0.9.0.pre11"
+  gem.add_dependency "bunny", ">= 0.10.8"
   gem.add_dependency "yajl-ruby", "~> 1.0"
 
   gem.add_development_dependency "rake", ">= 0.9.2"
