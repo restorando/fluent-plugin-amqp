@@ -40,7 +40,7 @@ Or install it yourself as:
   vhost /
   exchange my_exchange
   exchange_type topic
-  exchange_durable false # optionally set exchange durability - default is false.
+  exchange_durable true # optionally set exchange durability - default is true.
   payload_only false # optional - default is false. if true, only the payload will be sent. if false, data format is { "key" => tag, "timestamp" => time, "payload" => record }.
   content_type application/octet-stream # optional - default is application/octet-stream. some amqp consumers will expect application/json.
 </match>
