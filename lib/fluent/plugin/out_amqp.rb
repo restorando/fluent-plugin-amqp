@@ -8,7 +8,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :host, :string, default: "127.0.0.1"
   config_param :port, :integer, default: 5672
   config_param :user, :string, default: "guest"
-  config_param :password, :string, default: "guest"
+  config_param :password, :string, default: "guest", :secret => true
   config_param :vhost, :string, default: "/"
   config_param :exchange, :string, default: ""
   config_param :exchange_type, :string, default: "topic"
