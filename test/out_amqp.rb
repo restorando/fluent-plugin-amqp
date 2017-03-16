@@ -20,7 +20,7 @@ class AmqpOutputTest < Test::Unit::TestCase
     vhost /test
     exchange test-exchange
     exchange_type topic
-    priority 0
+    priority 3
     buffert_type memory
   ]
 
@@ -37,7 +37,7 @@ class AmqpOutputTest < Test::Unit::TestCase
     assert_equal "/test", d.instance.vhost
     assert_equal "test-exchange", d.instance.exchange
     assert_equal "topic", d.instance.exchange_type
-    assert_equal 0, d.instance.priority
+    assert_equal 3, d.instance.priority
   end
 
   def test_start_and_shutdown
@@ -77,8 +77,8 @@ class AmqpOutputTest < Test::Unit::TestCase
 
     ev1 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>1}})
     ev2 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>2}})
-    amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test", content_type: 'application/octet-stream', priority: 0 })
-    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test", content_type: 'application/octet-stream', priority: 0 })
+    amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test", content_type: 'application/octet-stream', priority: 3 })
+    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test", content_type: 'application/octet-stream', priority: 3 })
 
     d.run
   end
