@@ -20,6 +20,17 @@ class AmqpOutputTest < Test::Unit::TestCase
     vhost /test
     exchange test-exchange
     exchange_type topic
+    buffert_type memory
+  ]
+
+  PRIORITYCONFIG = %[
+    host localhost
+    port 3333
+    user test
+    password test
+    vhost /test
+    exchange test-exchange
+    exchange_type topic
     priority 3
     buffert_type memory
   ]
@@ -30,6 +41,17 @@ class AmqpOutputTest < Test::Unit::TestCase
 
   def test_configure
     d = create_driver
+    assert_equal "localhost", d.instance.host
+    assert_equal 3333, d.instance.port
+    assert_equal "test", d.instance.user
+    assert_equal "test", d.instance.password
+    assert_equal "/test", d.instance.vhost
+    assert_equal "test-exchange", d.instance.exchange
+    assert_equal "topic", d.instance.exchange_type
+  end
+
+  def test_configure_with_priority
+    d = create_driver PRIORITYCONFIG
     assert_equal "localhost", d.instance.host
     assert_equal 3333, d.instance.port
     assert_equal "test", d.instance.user
@@ -77,8 +99,28 @@ class AmqpOutputTest < Test::Unit::TestCase
 
     ev1 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>1}})
     ev2 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>2}})
+    amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test", content_type: 'application/octet-stream' })
+    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test", content_type: 'application/octet-stream' })
+
+    d.run
+  end
+
+  def test_flush_with_priority
+    d = create_driver PRIORITYCONFIG
+
+    amqp_conn_mock = mock()
+    amqp_exchange_mock = mock()
+    Bunny.stubs(:new).returns(amqp_conn_mock)
+    amqp_conn_mock.stubs(:open?).returns(true)
+    amqp_conn_mock.stubs(:create_channel)
+    amqp_conn_mock.stubs(:stop)
+    Bunny::Exchange.stubs(:new).returns(amqp_exchange_mock)
+
+    t = Time.now.to_i
+    d.emit({"a" => 1}, t)
+
+    ev1 = Yajl.dump({"key" => "test", "timestamp" => t, "payload" => {"a"=>1}})
     amqp_exchange_mock.expects(:publish).with(ev1, { routing_key: "test", content_type: 'application/octet-stream', priority: 3 })
-    amqp_exchange_mock.expects(:publish).with(ev2, { routing_key: "test", content_type: 'application/octet-stream', priority: 3 })
 
     d.run
   end

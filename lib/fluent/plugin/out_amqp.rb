@@ -15,7 +15,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :exchange_durable, :bool, default: true
   config_param :payload_only, :bool, default: false
   config_param :content_type, :string, default: "application/octet-stream"
-  config_param :priority, :integer, default: 0
+  config_param :priority, :integer, default: nil
 
   def initialize(*)
     super
@@ -67,7 +67,11 @@ class AmqpOutput < Fluent::BufferedOutput
   def write(chunk)
     chunk.msgpack_each do |(tag, time, record)|
       event = @payload_only ? record : { "key" => tag, "timestamp" => time, "payload" => record }
-      get_or_create_exchange.publish Yajl.dump(event), routing_key: tag, content_type: @content_type, priority: @priority
+      puboptions = { routing_key: tag, content_type: @content_type }
+      if ( !@priority.nil? )
+          puboptions[:priority] = @priority
+      end
+      get_or_create_exchange.publish Yajl.dump(event), puboptions
     end
   end
 
