@@ -68,8 +68,8 @@ class AmqpOutput < Fluent::BufferedOutput
     chunk.msgpack_each do |(tag, time, record)|
       event = @payload_only ? record : { "key" => tag, "timestamp" => time, "payload" => record }
       puboptions = { routing_key: tag, content_type: @content_type }
-      if ( !@priority.nil? )
-          puboptions[:priority] = @priority
+      if @priority
+        puboptions[:priority] = @priority
       end
       get_or_create_exchange.publish Yajl.dump(event), puboptions
     end
