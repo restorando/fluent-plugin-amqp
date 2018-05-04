@@ -13,6 +13,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :exchange, :string, default: ""
   config_param :exchange_type, :string, default: "topic"
   config_param :exchange_durable, :bool, default: true
+  config_param :passive, :bool, default: false
   config_param :payload_only, :bool, default: false
   config_param :content_type, :string, default: "application/octet-stream"
   config_param :priority, :integer, default: nil
@@ -85,7 +86,7 @@ class AmqpOutput < Fluent::BufferedOutput
 
     unless @amqp_channel && @amqp_channel.open?
       @amqp_channel  = @amqp_conn.create_channel
-      @amqp_exchange = Bunny::Exchange.new(@amqp_channel, @exchange_type.to_sym, @exchange_name, durable: @exchange_durable)
+      @amqp_exchange = Bunny::Exchange.new(@amqp_channel, @exchange_type.to_sym, @exchange_name, durable: @exchange_durable, no_declare: @passive)
     end
 
     @amqp_exchange
