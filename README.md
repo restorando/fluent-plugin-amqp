@@ -41,6 +41,7 @@ Or install it yourself as:
   exchange my_exchange
   exchange_type topic
   exchange_durable true # optionally set exchange durability - default is true.
+  passive false # If true, will not try to create the exchange - default is false.
   payload_only false # optional - default is false. if true, only the payload will be sent. if false, data format is { "key" => tag, "timestamp" => time, "payload" => record }.
   content_type application/octet-stream # optional - default is application/octet-stream. some amqp consumers will expect application/json.
   priority 0 # the priority for the message - requires bunny >= 1.1.6 and rabbitmq >= 3.5
