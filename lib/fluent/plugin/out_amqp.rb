@@ -17,6 +17,7 @@ class AmqpOutput < Fluent::BufferedOutput
   config_param :payload_only, :bool, default: false
   config_param :content_type, :string, default: "application/octet-stream"
   config_param :priority, :integer, default: nil
+  config_param :routing_key, :string, default: nil
 
   def initialize(*)
     super
@@ -68,7 +69,8 @@ class AmqpOutput < Fluent::BufferedOutput
   def write(chunk)
     chunk.msgpack_each do |(tag, time, record)|
       event = @payload_only ? record : { "key" => tag, "timestamp" => time, "payload" => record }
-      puboptions = { routing_key: tag, content_type: @content_type }
+      rk = @routing_key ? @routing_key : tag
+      puboptions = { routing_key: rk, content_type: @content_type }
       if @priority
         puboptions[:priority] = @priority
       end
