@@ -2,7 +2,7 @@
 
 Fluentd output plugin to publish events to an amqp broker.
 
-Events are published one by one using the Fluentd tag as the routing key, in JSON format like:
+Events are published one by one using the Fluentd tag as the routing key by default, in JSON format like:
 
 ```javascript
 { "key": "fluentd-tag", "timestamp": "fluentd-timestamp", "payload": "event-payload" }
@@ -41,6 +41,7 @@ Or install it yourself as:
   exchange my_exchange
   exchange_type topic
   exchange_durable true # optionally set exchange durability - default is true.
+  routing_key my_routing_key # optional - default is fluentd tag
   passive false # If true, will not try to create the exchange - default is false.
   payload_only false # optional - default is false. if true, only the payload will be sent. if false, data format is { "key" => tag, "timestamp" => time, "payload" => record }.
   content_type application/octet-stream # optional - default is application/octet-stream. some amqp consumers will expect application/json.
