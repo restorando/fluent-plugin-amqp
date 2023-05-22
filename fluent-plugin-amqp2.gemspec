@@ -3,7 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
-  gem.name          = "fluent-plugin-amqp2"
+  gem.name          = "fluent-plugin-amqp"
   gem.version       = "0.2.0"
   gem.authors       = ["Augusto Becciu", "Juan Manuel Barreneche"]
   gem.email         = ["devs@restorando.com"]
