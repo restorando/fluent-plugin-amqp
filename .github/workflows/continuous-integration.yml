@@ -1,14 +1,22 @@
-name: Ruby Gem
-
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+name: Continuous Integration
+on: [ push ]
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+    - name: Run tests
+      run: ruby test/out_amqp.rb
+
   build:
     name: Build + Publish
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,5 +38,5 @@ jobs:
         gem build *.gemspec
         gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
       env:
-        GEM_HOST_API_KEY: "Bearer ${{secrets.GITHUB_TOKEN}}"
+        GEM_HOST_API_KEY: "Bearer ${{secrets.CI_GITHUB_PACKAGE_RW_TOKEN}}"
         OWNER: ${{ github.repository_owner }}
