@@ -13,6 +13,8 @@ jobs:
         ruby-version: 2.6
     - name: Run tests
       run: ruby test/out_amqp.rb
+    - name: Install plugins
+      run: gem install mocha fluent-plugin-amqp2
 
   build:
     name: Build + Publish
