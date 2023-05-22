@@ -8,6 +8,10 @@ Events are published one by one using the Fluentd tag as the routing key, in JSO
 { "key": "fluentd-tag", "timestamp": "fluentd-timestamp", "payload": "event-payload" }
 ```
 
+## Testing
+
+`docker compose exec -u {yourusename} ruby ruby test/out_amqp.rb`
+
 ## Installation
 
 Add this line to your application's Gemfile:

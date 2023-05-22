@@ -1,0 +1,19 @@
+services:
+  ruby:
+    image: fluent-plugin-amqp
+    build:
+      args:
+        user: ${CURRENT_USER}
+        uid: ${CURRENT_UID}
+      context: .docker/
+    container_name: fluent-plugin-amqp
+    hostname: fluent-plugin-amqp
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    working_dir: /code/fluent-plugin-amqp/
+    environment:
+      COMPOSER_AUTH: ${COMPOSER_AUTH}
+      TOKEN: ${TOKEN}
+    volumes:
+      - ./:/code/fluent-plugin-amqp/
