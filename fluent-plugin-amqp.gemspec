@@ -24,4 +24,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake", ">= 0.9.2"
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "test-unit", ">= 3.1.0"
+  
+  gem.metadata = { "github_repo" => "ssh://github.com/fonq/fluent-plugin-amqp" }
 end

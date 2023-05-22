@@ -11,7 +11,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
-        
+
     - name: Install plugins
       run: gem install mocha fluent-plugin-amqp2
 
@@ -20,7 +20,7 @@ jobs:
 
   build:
     name: Build + Publish
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'    
     runs-on: ubuntu-latest
     permissions:
       contents: read
