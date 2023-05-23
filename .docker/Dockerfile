@@ -6,7 +6,7 @@ ARG uid
 
 RUN apt update
 RUN apt install -y git rake build-essential
-RUN gem install mocha
+RUN gem install fluentd amqp mocha
 
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir /code

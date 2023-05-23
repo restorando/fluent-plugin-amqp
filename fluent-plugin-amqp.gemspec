@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-amqp"
-  gem.version       = "0.2.0"
+  gem.version       = "0.2.1"
   gem.authors       = ["Augusto Becciu", "Juan Manuel Barreneche"]
   gem.email         = ["devs@restorando.com"]
 
@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{AMQP output plugin for Fluent}
   gem.homepage      = "https://github.com/restorando/fluent-plugin-amqp"
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `find ./ -type f | grep -v .git`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]

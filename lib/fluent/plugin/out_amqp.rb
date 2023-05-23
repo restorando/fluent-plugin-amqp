@@ -1,7 +1,7 @@
 # plugin based on https://github.com/restorando/fluent-plugin-amqp/tree/master
 # altered to be more stable when (connection) errors occur.
 # publish acknowledgement for rabbitmq have been enabled.
-
+# 
 # Copyright (c) 2013 Restorando
 #
 # MIT License
@@ -130,13 +130,12 @@ module Fluent
   
     def get_or_create_channel
   
-      @amqp_conn.start unless @amqp_conn.open?
-          @amqp_channel  = @amqp_conn.create_channel
-          @amqp_channel.confirm_select # enables publisher confirms
-      end
+      @amqp_channel  = @amqp_conn.create_channel
+      @amqp_channel.confirm_select # enables publisher confirms
   
       @amqp_channel
     end
   
   end
-  
+
+end

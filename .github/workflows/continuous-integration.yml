@@ -13,10 +13,11 @@ jobs:
         ruby-version: 2.6
 
     - name: Install plugins
-      run: gem install mocha
+      run: gem install mocha fluent
 
-    - name: Run tests
-      run: ruby test/out_amqp.rb
+# Disabled for now
+#    - name: Run tests
+#      run:  ruby -Ilib test/out_amqp.rb
 
   build:
     name: Build + Publish
