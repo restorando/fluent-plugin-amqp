@@ -13,7 +13,7 @@ jobs:
         ruby-version: 2.6
 
     - name: Install plugins
-      run: gem install mocha fluent
+      run: gem install mocha fluentd
 
 # Disabled for now
 #    - name: Run tests
