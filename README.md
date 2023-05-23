@@ -16,7 +16,7 @@ Events are published one by one using the Fluentd tag as the routing key, in JSO
 
 Add this line to your application's Gemfile:
 
-    gem 'fluent-plugin-amqp2'
+    gem 'fluent-plugin-amqp'
 
 And then execute:
 
@@ -24,7 +24,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install fluent-plugin-amqp2
+    $ gem install fluent-plugin-amqp
 
 ## Configuration
 

@@ -67,14 +67,20 @@ class AmqpOutputTest < Test::Unit::TestCase
 
     amqp_conn_mock = mock()
     amqp_exchange_mock = mock()
+    amqp_channel_mock = mock()
     Bunny.stubs(:new).returns(amqp_conn_mock)
+    amqp_conn_mock.stubs(:create_channel).returns(amqp_channel_mock)
 
     amqp_conn_mock.stubs(:open?).returns(false)
     amqp_conn_mock.expects(:start)
+    amqp_conn_mock.stubs(:open?).returns(true)
     amqp_conn_mock.expects(:stop)
-
     amqp_conn_mock.expects(:create_channel)
     Bunny::Exchange.expects(:new).returns(amqp_exchange_mock)
+
+    amqp_channel_mock.expects(:open?).returns(true)
+    amqp_channel_mock.expects(:confirm_select)
+    
 
     d.instance.start
     # wait until thread starts
