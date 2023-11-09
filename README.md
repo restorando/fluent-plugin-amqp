@@ -14,17 +14,15 @@ Events are published one by one using the Fluentd tag as the routing key, in JSO
 
 ## Installation
 
-Add this line to your application's Gemfile:
+ This plugin should be installed from its Github repository. In order to do that, you need access to a Github user with read access to the repository.
 
-    gem 'fluent-plugin-amqp'
+```
+$ export GITHUB_PACKAGE_USERNAME=user%40domain.com
+$ export GITHUB_PACKAGE_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxx
+$ fluent-gem  install --source https://$GITHUB_PACKAGE_USERNAME:$GITHUB_PACKAGE_TOKEN@rubygems.pkg.github.com/fonq/ fluent-plugin-amqp -V --version "0.2.2"
+```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install fluent-plugin-amqp
+Be sure to URL encode any special characters in the environment variables. Specify the version of the package that is specified in the gemspec file. The exact name of the gem utility will vary depending on the fluentd or td-agent package you have installed, but it should be from the package, and not from Ruby itself.
 
 ## Configuration
 
